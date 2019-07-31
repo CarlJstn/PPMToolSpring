@@ -14,15 +14,37 @@ public class ProjectServices {
 	@Autowired
 	private ProjectRepository projectRepository;
 	
-	public Project saveOrUpdateProject(Project project) {
-		try {
-			project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
-			return projectRepository.save(project);
-		} catch(Exception e) {
-			throw new ProjectIdException("Project ID '"+project.getProjectIdentifier().toUpperCase()+"' already exists");
+	//	Create and Update 
+	public Project saveOrUpdateProject(String projectId, Project project) {
+		if(!(projectId == "none")) {
+			// Update
+			Project projectUpdate = projectRepository.findByProjectIdentifier(projectId.toUpperCase());
+			projectUpdate.setDescription(project.getDescription());
+			projectUpdate.setProjectName(project.getProjectName());
+			projectUpdate.setStart_date(project.getStart_date());
+			projectUpdate.setEnd_date(project.getEnd_date());
+			projectUpdate.setProjectIdentifier(projectId);
+			
+			Project newProject = projectRepository.save(projectUpdate);
+			
+			if(newProject == null) {
+				throw new ProjectIdException("Project ID '"+projectId+"' does not exists");
+			}
+			
+			return newProject;
+		}else {
+			// Create
+			try {
+				project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
+				
+				return projectRepository.save(project);
+			} catch(Exception e) {
+				throw new ProjectIdException("Project ID '"+project.getProjectIdentifier().toUpperCase()+"' already exists");
+			}
 		}
 	}
 	
+	// Get Project by Id
 	public Project findProjectByIdentifier(String projectId) {
 		Project project = projectRepository.findByProjectIdentifier(projectId.toUpperCase());
 		
@@ -33,7 +55,19 @@ public class ProjectServices {
 		return project;
 	}
 	
+	// Get all projects
 	public Iterable<Project> findAllProjects(){
 		return projectRepository.findAll();
+	}
+	
+	// Delete project by Id
+	public void deleteProjectByIdentifier(String projectId) {
+		Project project = projectRepository.findByProjectIdentifier(projectId.toUpperCase());
+		
+		if(project == null) {
+			throw new ProjectIdException("Cannot delete Project with ID '"+projectId+"'. This project does not exists");
+		}
+		
+		projectRepository.delete(project);
 	}
 }
