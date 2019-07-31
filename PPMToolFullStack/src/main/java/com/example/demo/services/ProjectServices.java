@@ -19,19 +19,18 @@ public class ProjectServices {
 		if(!(projectId == "none")) {
 			// Update
 			Project projectUpdate = projectRepository.findByProjectIdentifier(projectId.toUpperCase());
+			
+			if(projectUpdate == null) {
+				throw new ProjectIdException("Project ID '"+projectId+"' does not exists");
+			}
+			
 			projectUpdate.setDescription(project.getDescription());
 			projectUpdate.setProjectName(project.getProjectName());
 			projectUpdate.setStart_date(project.getStart_date());
 			projectUpdate.setEnd_date(project.getEnd_date());
 			projectUpdate.setProjectIdentifier(projectId);
 			
-			Project newProject = projectRepository.save(projectUpdate);
-			
-			if(newProject == null) {
-				throw new ProjectIdException("Project ID '"+projectId+"' does not exists");
-			}
-			
-			return newProject;
+			return projectRepository.save(projectUpdate);
 		}else {
 			// Create
 			try {

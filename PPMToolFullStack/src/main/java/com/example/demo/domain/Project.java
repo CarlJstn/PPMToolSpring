@@ -12,26 +12,35 @@ import java.util.Date;
 @Entity
 public class Project {
 
+	// Id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    // Project Name
     @NotBlank(message = "Project Name is required")
     private String projectName;
    
+    // Project Identifier
     @NotBlank(message = "Project Identifier is required")
     @Size(min=4, max=5, message ="Please use 4 to 5 characters")
     @Column(updatable = false, unique = true)
     private String projectIdentifier;
+    
+    // Project Description
     @NotBlank(message = "Project description is required")
     private String description;
-    @JsonFormat(pattern = "yyyy-mm-dd")
+    
+    // Start and End Dates
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date start_date;
-    @JsonFormat(pattern = "yyyy-mm-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date end_date;
 
-    @JsonFormat(pattern = "yyyy-mm-dd")
+    // Created and Updated Dates
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date created_At;
-    @JsonFormat(pattern = "yyyy-mm-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date updated_At;
 
     public Project() {
