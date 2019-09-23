@@ -15,32 +15,14 @@ public class ProjectServices {
 	private ProjectRepository projectRepository;
 	
 	//	Create and Update 
-	public Project saveOrUpdateProject(String projectId, Project project) {
-		if(!(projectId == "none")) {
-			// Update
-			Project projectUpdate = projectRepository.findByProjectIdentifier(projectId.toUpperCase());
-			
-			if(projectUpdate == null) {
-				throw new ProjectIdException("Project ID '"+projectId+"' does not exists");
-			}
-			
-			projectUpdate.setDescription(project.getDescription());
-			projectUpdate.setProjectName(project.getProjectName());
-			projectUpdate.setStart_date(project.getStart_date());
-			projectUpdate.setEnd_date(project.getEnd_date());
-			projectUpdate.setProjectIdentifier(projectId);
-			
-			return projectRepository.save(projectUpdate);
-		}else {
-			// Create
-			try {
-				project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
-				
-				return projectRepository.save(project);
-			} catch(Exception e) {
-				throw new ProjectIdException("Project ID '"+project.getProjectIdentifier().toUpperCase()+"' already exists");
-			}
-		}
+	public Project saveOrUpdateProject(Project project){
+        try{
+            project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
+            return projectRepository.save(project);
+        }catch (Exception e){
+            throw new ProjectIdException("Project ID '"+project.getProjectIdentifier().toUpperCase()+"' already exists");
+        }	
+	
 	}
 	
 	// Get Project by Id
