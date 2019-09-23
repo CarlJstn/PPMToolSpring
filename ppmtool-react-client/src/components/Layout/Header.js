@@ -1,36 +1,42 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import { NavLink } from "react-router-dom";
 
 class Header extends Component {
   render() {
     return (
-      <nav className='navbar navbar-expand-md navbar-dark bg-primary mb-4'>
-        <div className='container'>
-          <a className='navbar-brand' href='/dashboard'>
+      <nav className="navbar navbar-expand-md navbar-dark bg-primary mb-4">
+        <div className="container">
+          <NavLink className="navbar-brand" to="/dashboard">
             PPMTool
-          </a>
-          <button className='navbar-toggler' type='button' data-toggle='collapse' data-target='#mobile-nav'>
-            <span className='navbar-toggler-icon' />
+          </NavLink>
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#mobile-nav"
+          >
+            <span className="navbar-toggler-icon" />
           </button>
 
-          <div className='collapse navbar-collapse' id='mobile-nav'>
-            <ul className='navbar-nav mr-auto'>
-              <li className='nav-item'>
-                <a className='nav-link' href='/dashboard'>
+          <div className="collapse navbar-collapse" id="mobile-nav">
+            <ul className="navbar-nav mr-auto">
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/dashboard">
                   Dashboard
-                </a>
+                </NavLink>
               </li>
             </ul>
 
-            <ul className='navbar-nav ml-auto'>
-              <li className='nav-item'>
-                <a className='nav-link ' href='register.html'>
+            <ul className="navbar-nav ml-auto">
+              <li className="nav-item">
+                <NavLink className="nav-link " to="/register">
                   Sign Up
-                </a>
+                </NavLink>
               </li>
-              <li className='nav-item'>
-                <a className='nav-link' href='login.html'>
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/login">
                   Login
-                </a>
+                </NavLink>
               </li>
             </ul>
           </div>
