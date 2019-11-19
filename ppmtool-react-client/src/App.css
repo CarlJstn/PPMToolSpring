@@ -9,19 +9,32 @@ img {
   color: #18a2b9;
 }
 
+.list-group-item.delete {
+  color: red;
+}
+
+.list-group-item.update {
+  color: #18a2b9;
+}
+
+.project-action-links:hover {
+  text-decoration: none;
+}
+
 .list-group-item.delete:hover {
   cursor: -webkit-pointer;
   background-color: pink;
+  text-decoration: none;
 }
 
 .list-group-item.update:hover {
   cursor: -webkit-pointer;
-  background-color: gainsboro;
+  background-color: lightcyan;
 }
 
 .list-group-item.board:hover {
   cursor: -webkit-pointer;
-  background-color: gainsboro;
+  background-color: lightskyblue;
 }
 
 .fa.fa-minus-circle {
