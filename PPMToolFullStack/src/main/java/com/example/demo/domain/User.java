@@ -34,11 +34,7 @@ public class User {
     @ValidPassword
     private String password;
     
-    // Confirm Password
-    @NotBlank(message = "Password confirmation is required") 
-    private String passwordConfirm;
-    
-    // Project Identifier
+    // Username
     @NotBlank(message = "Username is required")
     @Size(min=4, max=5, message ="Please use 4 to 5 characters")
     @Column(updatable = false, unique = true)
@@ -96,14 +92,6 @@ public class User {
         this.password = password;
     }
     
-    public String getPasswordConfirm() {
-        return passwordConfirm;
-    }
-
-    public void setPasswordConfirm(String passwordConfirm) {
-        this.passwordConfirm = passwordConfirm;
-    }
-
     public String getUsername() {
         return username;
     }

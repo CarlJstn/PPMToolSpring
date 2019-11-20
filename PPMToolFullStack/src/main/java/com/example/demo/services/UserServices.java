@@ -1,13 +1,14 @@
 package com.example.demo.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.example.demo.domain.Project;
 import com.example.demo.domain.User;
 import com.example.demo.exceptions.ProjectIdException;
-import com.example.demo.repositories.UserRepository;
-
+import com.example.demo.repositories.UserRepository; 
 
 @Service
 public class UserServices {
@@ -15,24 +16,21 @@ public class UserServices {
 	@Autowired
 	private UserRepository userRepository;
 	
+	@Autowired
+	private PasswordEncoder bCryptPasswordEncoder;
+	
 	//	Create and Update 
 	public User saveOrUpdateUser(User user){
-		if(user.getPassword().equals(user.getPasswordConfirm())) {
-			try{
-				user.setUsername(user.getUsername());
-		        return userRepository.save(user);
-	        }catch (Exception e){
-	            throw new ProjectIdException("Username '"+user.getUsername()+"' already exists");
-	        }
-		} else {
-			throw new ProjectIdException("Password does not match");
-		}
-	}
-	
+		try{
+			String Password = bCryptPasswordEncoder.encode(user.getPassword());
+			user.setPassword(Password);
+	        return userRepository.save(user);
+        }catch (Exception e){
+            throw new ProjectIdException("Username "+user.getUsername()+" already exists");
+        }
+	}	
 	// Get all users
-	public Iterable<User> findAllUsers(){
-		return userRepository.findAll();
-	}
-	
-
+	public List<User> findAllUsers(){
+		return (List<User>) userRepository.findAll();
+	}	
 }
